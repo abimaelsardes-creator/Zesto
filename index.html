@@ -86,6 +86,17 @@
             () => {
                 locationStatus.textContent =
                     "❌ Autorisation de localisation refusée." });
+<script>
+    const categoryButtons = document.querySelectorAll(".categories button");
+
+    categoryButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const category = button.textContent;
+
+            alert("Vous avez choisi : " + category);
+        });
+    });
 </script>
+                                    </script>
 </body>
 </html>
