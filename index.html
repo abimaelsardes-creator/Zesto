@@ -4,164 +4,453 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Zesto</title>
+    <title>Zesto - Commandez simplement</title>
 
-    <meta name="description" content="Zesto - Commandez vos plats simplement et rapidement.">
+    <meta name="description" content="Zesto - Découvrez des restaurants et commandez vos plats simplement et rapidement.">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+        header {
+            padding: 25px 20px;
+            background: #ff6b00;
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .location-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        #locationStatus {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-button {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .category-button:hover {
+            background: #eee;
+        }
+
+        #restaurantsList {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .restaurant {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .restaurant h3 {
+            margin-top: 0;
+        }
+
+        .restaurant button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #ff6b00;
+            color: white;
+            cursor: pointer;
+        }
+
+        .message {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🍽️ Zesto</h1>
-        <p>Votre repas préféré, simplement.</p>
-    </header>
+<header>
+    <h1>🍽️ Zesto</h1>
+    <p>Votre repas préféré, simplement.</p>
+</header>
 
-    <main>
-      <input 
-    type="search" 
-    placeholder="🔍 Rechercher un restaurant ou un plat..."
-    aria-label="Rechercher un restaurant ou un plat"> 
-        <button id="locationButton">
-    📍 Utiliser ma position
-</button>
+<main>
 
-<p id="locationStatus"></p>
-        <h2>Qu'avez-vous envie de manger ?</h2>
+    <input
+        id="searchInput"
+        class="search-box"
+        type="search"
+        placeholder="🔍 Rechercher un restaurant ou un plat..."
+    >
 
-        <div class="categories">
+    <button id="locationButton" class="location-button">
+        📍 Utiliser ma position
+    </button>
 
-    <button>🍔 Burgers</button>
-    <button>🍕 Pizza</button>
-    <button>🍣 Sushi</button>
-    <button>🍗 Poulet</button>
-    <button>🌮 Tacos</button>
-    <button>🌯 Wraps</button>
-    <button>🍝 Pâtes</button>
-    <button>🍜 Nouilles</button>
-    <button>🍚 Riz</button>
-    <button>🥘 Plats marocains</button>
-    <button>🍛 Cuisine africaine</button>
-    <button>🥩 Grillades</button>
-    <button>🍟 Fast-food</button>
-    <button>🥗 Salades</button>
-    <button>🥪 Sandwichs</button>
-    <button>🥙 Shawarma</button>
-    <button>🍳 Petit-déjeuner</button>
-    <button>🥞 Crêpes</button>
-    <button>🧇 Gaufres</button>
-    <button>🍰 Desserts</button>
-    <button>🍦 Glaces</button>
-    <button>🍩 Donuts</button>
-    <button>🍫 Chocolat</button>
-    <button>🥤 Boissons</button>
-    <button>☕ Café</button>
-    <button>🧃 Jus</button>
+    <p id="locationStatus"></p>
 
-</div>
+    <h2>Qu'avez-vous envie de manger ?</h2>
 
-        <h2>Restaurants</h2>
+    <div class="categories">
 
-<div id="restaurantsList">
-    <p>Choisissez une catégorie pour voir les restaurants.</p>
-</div>
-        
-    </main>
+        <button class="category-button">🍔 Burgers</button>
+        <button class="category-button">🍕 Pizza</button>
+        <button class="category-button">🍣 Sushi</button>
+        <button class="category-button">🍗 Poulet</button>
+        <button class="category-button">🌮 Tacos</button>
+        <button class="category-button">🌯 Wraps</button>
+        <button class="category-button">🍝 Pâtes</button>
+        <button class="category-button">🍜 Nouilles</button>
+        <button class="category-button">🍚 Riz</button>
+        <button class="category-button">🥘 Plats marocains</button>
+        <button class="category-button">🍛 Cuisine africaine</button>
+        <button class="category-button">🥩 Grillades</button>
+        <button class="category-button">🍟 Fast-food</button>
+        <button class="category-button">🥗 Salades</button>
+        <button class="category-button">🥪 Sandwichs</button>
+        <button class="category-button">🥙 Shawarma</button>
+        <button class="category-button">🍳 Petit-déjeuner</button>
+        <button class="category-button">🥞 Crêpes</button>
+        <button class="category-button">🧇 Gaufres</button>
+        <button class="category-button">🍰 Desserts</button>
+        <button class="category-button">🍦 Glaces</button>
+        <button class="category-button">🍩 Donuts</button>
+        <button class="category-button">🍫 Chocolat</button>
+        <button class="category-button">🥤 Boissons</button>
+        <button class="category-button">☕ Café</button>
+        <button class="category-button">🧃 Jus</button>
+
+    </div>
+
+    <h2>Restaurants</h2>
+
+    <div id="restaurantsList">
+        <div class="message">
+            Choisissez une catégorie pour voir les restaurants disponibles.
+        </div>
+    </div>
+
+</main>
+
 <script>
-    const locationButton = document.getElementById("locationButton");
-    const locationStatus = document.getElementById("locationStatus");
 
-    locationButton.addEventListener("click", () => {
-        if (!navigator.geolocation) {
-            locationStatus.textContent = "La localisation n'est pas disponible.";
-            return;
-        }
+    /* =========================
+       RESTAURANTS DE TEST
+    ========================= */
 
-        locationStatus.textContent = "📍 Recherche de votre position...";
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                locationStatus.textContent = "✅ Position trouvée !";
-            },
-            () => {
-                locationStatus.textContent = "❌ Autorisation refusée.";
-            }
-        );
-    });
-
-    <script>
     const restaurants = {
+
         "🍣 Sushi": [
-            "Sushi House",
-            "Tokyo Sushi",
-            "Sushi Time"
+            {
+                name: "Sushi House",
+                rating: "⭐ 4.8",
+                time: "25-35 min"
+            },
+            {
+                name: "Tokyo Sushi",
+                rating: "⭐ 4.6",
+                time: "30-40 min"
+            },
+            {
+                name: "Sushi Time",
+                rating: "⭐ 4.7",
+                time: "20-30 min"
+            }
         ],
 
         "🍔 Burgers": [
-            "Burger House",
-            "Big Burger",
-            "Burger Time"
+            {
+                name: "Burger House",
+                rating: "⭐ 4.7",
+                time: "20-30 min"
+            },
+            {
+                name: "Big Burger",
+                rating: "⭐ 4.5",
+                time: "25-35 min"
+            }
         ],
 
         "🍕 Pizza": [
-            "Pizza House",
-            "Pizza Time",
-            "La Bella Pizza"
+            {
+                name: "Pizza House",
+                rating: "⭐ 4.6",
+                time: "25-35 min"
+            },
+            {
+                name: "La Bella Pizza",
+                rating: "⭐ 4.8",
+                time: "20-30 min"
+            }
         ],
 
         "🥙 Shawarma": [
-            "Shawarma House",
-            "Shawarma Time",
-            "Le Petit Shawarma"
+            {
+                name: "Shawarma House",
+                rating: "⭐ 4.7",
+                time: "15-25 min"
+            },
+            {
+                name: "Shawarma Time",
+                rating: "⭐ 4.5",
+                time: "20-30 min"
+            }
         ],
 
         "🍗 Poulet": [
-            "Chicken House",
-            "Chicken Time",
-            "Poulet Express"
+            {
+                name: "Chicken House",
+                rating: "⭐ 4.6",
+                time: "20-30 min"
+            }
         ]
+
     };
 
+
+    /* =========================
+       AFFICHER LES RESTAURANTS
+    ========================= */
+
     const categoryButtons =
-        document.querySelectorAll(".categories button");
+        document.querySelectorAll(".category-button");
 
     const restaurantsList =
         document.getElementById("restaurantsList");
 
-    categoryButtons.forEach(button => {
 
-        button.addEventListener("click", () => {
+    categoryButtons.forEach(function(button) {
 
-            const category = button.textContent;
+        button.addEventListener("click", function() {
+
+            const category = button.textContent.trim();
 
             const selectedRestaurants =
                 restaurants[category];
 
             if (!selectedRestaurants) {
-                restaurantsList.innerHTML =
-                    "<p>Aucun restaurant disponible pour cette catégorie pour le moment.</p>";
+
+                restaurantsList.innerHTML = `
+                    <div class="message">
+                        Aucun restaurant disponible pour ${category} pour le moment.
+                    </div>
+                `;
+
                 return;
             }
 
-            restaurantsList.innerHTML =
-                "<h3>" + category + "</h3>" +
-                selectedRestaurants
-                    .map(restaurant => "<p>🍽️ " + restaurant + "</p>")
-                    .join("");
+
+            restaurantsList.innerHTML = "";
+
+
+            selectedRestaurants.forEach(function(restaurant) {
+
+                const restaurantElement =
+                    document.createElement("div");
+
+                restaurantElement.className = "restaurant";
+
+                restaurantElement.innerHTML = `
+                    <h3>🍽️ ${restaurant.name}</h3>
+                    <p>${restaurant.rating}</p>
+                    <p>🛵 Livraison : ${restaurant.time}</p>
+                    <button>Voir le menu</button>
+                `;
+
+                restaurantsList.appendChild(
+                    restaurantElement
+                );
+
+            });
+
         });
 
     });
-</script>
 
-    categoryButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            alert("Vous avez choisi : " + button.textContent);
-        });
+
+    /* =========================
+       LOCALISATION
+    ========================= */
+
+    const locationButton =
+        document.getElementById("locationButton");
+
+    const locationStatus =
+        document.getElementById("locationStatus");
+
+
+    locationButton.addEventListener("click", function() {
+
+        if (!navigator.geolocation) {
+
+            locationStatus.textContent =
+                "❌ La localisation n'est pas disponible.";
+
+            return;
+        }
+
+
+        locationStatus.textContent =
+            "📍 Recherche de votre position...";
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+
+                locationStatus.textContent =
+                    "✅ Position trouvée. Zesto peut maintenant utiliser votre localisation.";
+            },
+
+            function() {
+
+                locationStatus.textContent =
+                    "❌ Autorisation de localisation refusée.";
+
+            }
+
+        );
+
     });
+
+
+    /* =========================
+       RECHERCHE
+    ========================= */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+
+    searchInput.addEventListener("input", function() {
+
+        const search =
+            searchInput.value.toLowerCase().trim();
+
+
+        if (search === "") {
+            return;
+        }
+
+
+        const results = [];
+
+
+        Object.keys(restaurants).forEach(function(category) {
+
+            restaurants[category].forEach(function(restaurant) {
+
+                if (
+                    restaurant.name
+                        .toLowerCase()
+                        .includes(search)
+                    ||
+                    category
+                        .toLowerCase()
+                        .includes(search)
+                ) {
+
+                    results.push(restaurant);
+
+                }
+
+            });
+
+        });
+
+
+        if (results.length === 0) {
+
+            restaurantsList.innerHTML = `
+                <div class="message">
+                    Aucun résultat trouvé.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        restaurantsList.innerHTML = "";
+
+
+        results.forEach(function(restaurant) {
+
+            const restaurantElement =
+                document.createElement("div");
+
+            restaurantElement.className = "restaurant";
+
+            restaurantElement.innerHTML = `
+                <h3>🍽️ ${restaurant.name}</h3>
+                <p>${restaurant.rating}</p>
+                <p>🛵 Livraison : ${restaurant.time}</p>
+                <button>Voir le menu</button>
+            `;
+
+            restaurantsList.appendChild(
+                restaurantElement
+            );
+
+        });
+
+    });
+
 </script>
 
-</body>
-</html>
-
-    
 </body>
 </html>
