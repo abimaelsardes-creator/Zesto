@@ -20,7 +20,7 @@ function getZestoSearchResults(query) {
 }
 
 function renderZestoRestaurants(restaurants = getZestoRestaurants()) {
-    const container = document.getElementById("restaurantsContainer");
+    const container = document.getElementById("restaurants");
 
     if (!container) {
         console.warn("Conteneur des restaurants introuvable.");
