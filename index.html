@@ -6,30 +6,41 @@
 
     <title>Zesto - Commandez simplement</title>
 
-    <meta name="description" content="Zesto - Découvrez des restaurants et commandez vos plats simplement et rapidement.">
+    <meta
+        name="description"
+        content="Zesto - Découvrez des restaurants et commandez vos plats simplement et rapidement."
+    >
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            background: #f7f7f7;
+            font-family: Arial, sans-serif;
+            background: #f6f6f6;
             color: #222;
         }
 
         header {
-            padding: 25px 20px;
             background: #ff6b00;
             color: white;
+            padding: 25px 20px;
             text-align: center;
         }
 
         header h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 34px;
+        }
+
+        header p {
+            margin: 8px 0 0;
         }
 
         main {
-            max-width: 900px;
+            max-width: 1000px;
             margin: auto;
             padding: 20px;
         }
@@ -37,28 +48,34 @@
         .search-box {
             width: 100%;
             padding: 15px;
-            box-sizing: border-box;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .location-button {
             width: 100%;
             padding: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             background: #222;
             color: white;
             font-size: 16px;
             cursor: pointer;
-            margin-bottom: 10px;
+        }
+
+        .location-button:hover {
+            background: #444;
         }
 
         #locationStatus {
             text-align: center;
-            margin-bottom: 25px;
+            min-height: 24px;
+        }
+
+        h2 {
+            margin-top: 30px;
         }
 
         .categories {
@@ -70,46 +87,204 @@
         .category-button {
             padding: 12px 15px;
             border: 1px solid #ddd;
-            border-radius: 20px;
+            border-radius: 25px;
             background: white;
             cursor: pointer;
             font-size: 15px;
         }
 
         .category-button:hover {
-            background: #eee;
+            background: #ff6b00;
+            color: white;
+            border-color: #ff6b00;
         }
 
         #restaurantsList {
             display: grid;
             gap: 15px;
-            margin-top: 20px;
         }
 
         .restaurant {
             background: white;
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
         }
 
         .restaurant h3 {
             margin-top: 0;
+            font-size: 21px;
         }
 
-        .restaurant button {
-            padding: 10px 15px;
+        .restaurant button,
+        .add-button,
+        .checkout-button {
             border: none;
-            border-radius: 8px;
+            border-radius: 9px;
             background: #ff6b00;
             color: white;
+            padding: 12px 16px;
             cursor: pointer;
+            font-size: 15px;
+        }
+
+        .restaurant button:hover,
+        .add-button:hover,
+        .checkout-button:hover {
+            background: #e85f00;
         }
 
         .message {
             background: white;
             padding: 20px;
             border-radius: 12px;
+        }
+
+        #menuSection {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .menu-header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .menu-item h4 {
+            margin: 0 0 7px;
+        }
+
+        .menu-item p {
+            margin: 0;
+            color: #666;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #ff6b00;
+            margin-top: 8px !important;
+        }
+
+        #cartSection {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .cart-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .quantity-buttons button {
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            padding: 5px 9px;
+            cursor: pointer;
+        }
+
+        .remove-button {
+            border: none;
+            background: #eee;
+            border-radius: 6px;
+            padding: 6px 9px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        #orderSection {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .order-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .order-input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .back-button {
+            border: none;
+            background: #eee;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .cart-button {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            border: none;
+            border-radius: 50px;
+            background: #ff6b00;
+            color: white;
+            padding: 15px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .success {
+            background: #e8f8ed;
+            color: #176b35;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 15px;
+            }
+
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-item button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -123,6 +298,8 @@
 
 <main>
 
+    <!-- RECHERCHE -->
+
     <input
         id="searchInput"
         class="search-box"
@@ -130,11 +307,15 @@
         placeholder="🔍 Rechercher un restaurant ou un plat..."
     >
 
+    <!-- LOCALISATION -->
+
     <button id="locationButton" class="location-button">
         📍 Utiliser ma position
     </button>
 
     <p id="locationStatus"></p>
+
+    <!-- CATEGORIES -->
 
     <h2>Qu'avez-vous envie de manger ?</h2>
 
@@ -169,6 +350,8 @@
 
     </div>
 
+    <!-- RESTAURANTS -->
+
     <h2>Restaurants</h2>
 
     <div id="restaurantsList">
@@ -177,13 +360,118 @@
         </div>
     </div>
 
+    <!-- MENU -->
+
+    <section id="menuSection">
+
+        <div class="menu-header">
+            <button class="back-button" onclick="backToRestaurants()">
+                ← Retour aux restaurants
+            </button>
+
+            <h2 id="menuRestaurantName"></h2>
+
+            <p>
+                Choisissez vos plats et ajoutez-les au panier.
+            </p>
+        </div>
+
+        <div id="menuList"></div>
+
+    </section>
+
+    <!-- PANIER -->
+
+    <section id="cartSection">
+
+        <div class="cart-box">
+
+            <button class="back-button" onclick="closeCart()">
+                ← Continuer mes achats
+            </button>
+
+            <h2>🛒 Mon panier</h2>
+
+            <div id="cartList"></div>
+
+            <div id="cartTotal" class="cart-total"></div>
+
+            <button
+                id="checkoutButton"
+                class="checkout-button"
+                onclick="showOrderForm()"
+            >
+                📦 Passer la commande
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- COMMANDE -->
+
+    <section id="orderSection">
+
+        <div class="order-box">
+
+            <button class="back-button" onclick="closeOrderForm()">
+                ← Retour au panier
+            </button>
+
+            <h2>📦 Finaliser ma commande</h2>
+
+            <input
+                id="customerName"
+                class="order-input"
+                type="text"
+                placeholder="Votre nom"
+            >
+
+            <input
+                id="customerPhone"
+                class="order-input"
+                type="tel"
+                placeholder="Votre numéro de téléphone"
+            >
+
+            <input
+                id="customerAddress"
+                class="order-input"
+                type="text"
+                placeholder="Votre adresse de livraison"
+            >
+
+            <button
+                class="checkout-button"
+                onclick="confirmOrder()"
+            >
+                ✅ Confirmer la commande
+            </button>
+
+            <div id="orderMessage"></div>
+
+        </div>
+
+    </section>
+
 </main>
+
+<!-- BOUTON PANIER -->
+
+<button
+    id="cartButton"
+    class="cart-button"
+    onclick="openCart()"
+>
+    🛒 Panier (0)
+</button>
+
 
 <script>
 
-    /* =========================
-       RESTAURANTS DE TEST
-    ========================= */
+    /* =====================================================
+       DONNÉES DES RESTAURANTS
+    ===================================================== */
 
     const restaurants = {
 
@@ -231,6 +519,22 @@
             }
         ],
 
+        "🍗 Poulet": [
+            {
+                name: "Chicken House",
+                rating: "⭐ 4.6",
+                time: "20-30 min"
+            }
+        ],
+
+        "🌮 Tacos": [
+            {
+                name: "Tacos House",
+                rating: "⭐ 4.6",
+                time: "20-30 min"
+            }
+        ],
+
         "🥙 Shawarma": [
             {
                 name: "Shawarma House",
@@ -244,10 +548,10 @@
             }
         ],
 
-        "🍗 Poulet": [
+        "🍟 Fast-food": [
             {
-                name: "Chicken House",
-                rating: "⭐ 4.6",
+                name: "Fast Food Zesto",
+                rating: "⭐ 4.5",
                 time: "20-30 min"
             }
         ]
@@ -255,9 +559,196 @@
     };
 
 
-    /* =========================
+    /* =====================================================
+       MENUS
+    ===================================================== */
+
+    const menus = {
+
+        "Sushi House": [
+            {
+                name: "Sushi Mix",
+                description: "Assortiment de sushi frais",
+                price: 65
+            },
+            {
+                name: "California Roll",
+                description: "California roll classique",
+                price: 45
+            },
+            {
+                name: "Salmon Sushi",
+                description: "Sushi au saumon",
+                price: 55
+            }
+        ],
+
+        "Tokyo Sushi": [
+            {
+                name: "Tokyo Mix",
+                description: "Assortiment spécial Tokyo",
+                price: 70
+            },
+            {
+                name: "Dragon Roll",
+                description: "Roll gourmand",
+                price: 60
+            }
+        ],
+
+        "Sushi Time": [
+            {
+                name: "Sushi Box",
+                description: "Box découverte",
+                price: 60
+            },
+            {
+                name: "California Box",
+                description: "Box California",
+                price: 50
+            }
+        ],
+
+        "Burger House": [
+            {
+                name: "Classic Burger",
+                description: "Burger avec steak, salade et sauce",
+                price: 45
+            },
+            {
+                name: "Cheese Burger",
+                description: "Burger avec fromage",
+                price: 50
+            },
+            {
+                name: "Double Burger",
+                description: "Double steak et fromage",
+                price: 65
+            }
+        ],
+
+        "Big Burger": [
+            {
+                name: "Big Burger",
+                description: "Grand burger maison",
+                price: 55
+            },
+            {
+                name: "Chicken Burger",
+                description: "Burger au poulet croustillant",
+                price: 48
+            }
+        ],
+
+        "Pizza House": [
+            {
+                name: "Pizza Margherita",
+                description: "Tomate, mozzarella et basilic",
+                price: 45
+            },
+            {
+                name: "Pizza Poulet",
+                description: "Poulet, fromage et sauce",
+                price: 60
+            },
+            {
+                name: "Pizza Viande",
+                description: "Viande hachée et fromage",
+                price: 65
+            }
+        ],
+
+        "La Bella Pizza": [
+            {
+                name: "Pizza 4 Fromages",
+                description: "Mélange de quatre fromages",
+                price: 65
+            },
+            {
+                name: "Pizza Pepperoni",
+                description: "Pepperoni et fromage",
+                price: 60
+            }
+        ],
+
+        "Chicken House": [
+            {
+                name: "Poulet Grillé",
+                description: "Poulet grillé avec accompagnement",
+                price: 55
+            },
+            {
+                name: "Chicken Wings",
+                description: "Ailes de poulet croustillantes",
+                price: 45
+            }
+        ],
+
+        "Tacos House": [
+            {
+                name: "Tacos Poulet",
+                description: "Tacos poulet, fromage et sauce",
+                price: 35
+            },
+            {
+                name: "Tacos Viande",
+                description: "Tacos viande hachée",
+                price: 40
+            }
+        ],
+
+        "Shawarma House": [
+            {
+                name: "Shawarma Poulet",
+                description: "Shawarma poulet avec sauce",
+                price: 30
+            },
+            {
+                name: "Shawarma Viande",
+                description: "Shawarma viande",
+                price: 35
+            }
+        ],
+
+        "Shawarma Time": [
+            {
+                name: "Shawarma Classic",
+                description: "Shawarma classique",
+                price: 28
+            },
+            {
+                name: "Shawarma Cheese",
+                description: "Shawarma avec fromage",
+                price: 35
+            }
+        ],
+
+        "Fast Food Zesto": [
+            {
+                name: "Menu Zesto",
+                description: "Burger + frites + boisson",
+                price: 65
+            },
+            {
+                name: "Chicken Menu",
+                description: "Poulet + frites + boisson",
+                price: 60
+            }
+        ]
+
+    };
+
+
+    /* =====================================================
+       PANIER
+    ===================================================== */
+
+    let cart = [];
+
+
+    /* =====================================================
        AFFICHER LES RESTAURANTS
-    ========================= */
+    ===================================================== */
 
     const categoryButtons =
         document.querySelectorAll(".category-button");
@@ -270,154 +761,35 @@
 
         button.addEventListener("click", function() {
 
-            const category = button.textContent.trim();
+            const category =
+                button.textContent.trim();
 
-            const selectedRestaurants =
-                restaurants[category];
-
-            if (!selectedRestaurants) {
-
-                restaurantsList.innerHTML = `
-                    <div class="message">
-                        Aucun restaurant disponible pour ${category} pour le moment.
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            restaurantsList.innerHTML = "";
-
-
-            selectedRestaurants.forEach(function(restaurant) {
-
-                const restaurantElement =
-                    document.createElement("div");
-
-                restaurantElement.className = "restaurant";
-
-                restaurantElement.innerHTML = `
-                    <h3>🍽️ ${restaurant.name}</h3>
-                    <p>${restaurant.rating}</p>
-                    <p>🛵 Livraison : ${restaurant.time}</p>
-                    <button>Voir le menu</button>
-                `;
-
-                restaurantsList.appendChild(
-                    restaurantElement
-                );
-
-            });
+            showRestaurants(category);
 
         });
 
     });
 
 
-    /* =========================
-       LOCALISATION
-    ========================= */
+    function showRestaurants(category) {
 
-    const locationButton =
-        document.getElementById("locationButton");
+        const selectedRestaurants =
+            restaurants[category];
 
-    const locationStatus =
-        document.getElementById("locationStatus");
+        document.getElementById("menuSection").style.display =
+            "none";
 
+        document.getElementById("cartSection").style.display =
+            "none";
 
-    locationButton.addEventListener("click", function() {
+        document.getElementById("orderSection").style.display =
+            "none";
 
-        if (!navigator.geolocation) {
-
-            locationStatus.textContent =
-                "❌ La localisation n'est pas disponible.";
-
-            return;
-        }
-
-
-        locationStatus.textContent =
-            "📍 Recherche de votre position...";
-
-
-        navigator.geolocation.getCurrentPosition(
-
-            function(position) {
-
-                const latitude =
-                    position.coords.latitude;
-
-                const longitude =
-                    position.coords.longitude;
-
-
-                locationStatus.textContent =
-                    "✅ Position trouvée. Zesto peut maintenant utiliser votre localisation.";
-            },
-
-            function() {
-
-                locationStatus.textContent =
-                    "❌ Autorisation de localisation refusée.";
-
-            }
-
-        );
-
-    });
-
-
-    /* =========================
-       RECHERCHE
-    ========================= */
-
-    const searchInput =
-        document.getElementById("searchInput");
-
-
-    searchInput.addEventListener("input", function() {
-
-        const search =
-            searchInput.value.toLowerCase().trim();
-
-
-        if (search === "") {
-            return;
-        }
-
-
-        const results = [];
-
-
-        Object.keys(restaurants).forEach(function(category) {
-
-            restaurants[category].forEach(function(restaurant) {
-
-                if (
-                    restaurant.name
-                        .toLowerCase()
-                        .includes(search)
-                    ||
-                    category
-                        .toLowerCase()
-                        .includes(search)
-                ) {
-
-                    results.push(restaurant);
-
-                }
-
-            });
-
-        });
-
-
-        if (results.length === 0) {
+        if (!selectedRestaurants) {
 
             restaurantsList.innerHTML = `
                 <div class="message">
-                    Aucun résultat trouvé.
+                    Aucun restaurant disponible dans cette catégorie pour le moment.
                 </div>
             `;
 
@@ -428,27 +800,653 @@
         restaurantsList.innerHTML = "";
 
 
-        results.forEach(function(restaurant) {
+        selectedRestaurants.forEach(function(restaurant) {
 
-            const restaurantElement =
+            const element =
                 document.createElement("div");
 
-            restaurantElement.className = "restaurant";
+            element.className = "restaurant";
 
-            restaurantElement.innerHTML = `
+            element.innerHTML = `
                 <h3>🍽️ ${restaurant.name}</h3>
                 <p>${restaurant.rating}</p>
                 <p>🛵 Livraison : ${restaurant.time}</p>
-                <button>Voir le menu</button>
+
+                <button onclick="openMenu('${restaurant.name}')">
+                    📋 Voir le menu
+                </button>
             `;
 
-            restaurantsList.appendChild(
-                restaurantElement
-            );
+            restaurantsList.appendChild(element);
 
         });
 
-    });
+    }
+
+
+    /* =====================================================
+       AFFICHER LE MENU
+    ===================================================== */
+
+    function openMenu(restaurantName) {
+
+        const menu =
+            menus[restaurantName] || [];
+
+        document.getElementById("menuSection").style.display =
+            "block";
+
+        document.getElementById("cartSection").style.display =
+            "none";
+
+        document.getElementById("orderSection").style.display =
+            "none";
+
+        document.getElementById("menuRestaurantName").textContent =
+            "🍽️ " + restaurantName;
+
+        const menuList =
+            document.getElementById("menuList");
+
+        menuList.innerHTML = "";
+
+
+        if (menu.length === 0) {
+
+            menuList.innerHTML = `
+                <div class="message">
+                    Menu bientôt disponible.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        menu.forEach(function(item, index) {
+
+            const element =
+                document.createElement("div");
+
+            element.className = "menu-item";
+
+            element.innerHTML = `
+                <div>
+                    <h4>${item.name}</h4>
+                    <p>${item.description}</p>
+                    <p class="price">${item.price} DH</p>
+                </div>
+
+                <button
+                    class="add-button"
+                    onclick="addToCart('${restaurantName}', '${item.name}', ${item.price})"
+                >
+                    ➕ Ajouter
+                </button>
+            `;
+
+            menuList.appendChild(element);
+
+        });
+
+        document.getElementById("menuSection")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+
+
+    /* =====================================================
+       AJOUTER AU PANIER
+    ===================================================== */
+
+    function addToCart(
+        restaurant,
+        name,
+        price
+    ) {
+
+        const existing =
+            cart.find(function(item) {
+
+                return (
+                    item.restaurant === restaurant &&
+                    item.name === name
+                );
+
+            });
+
+
+        if (existing) {
+
+            existing.quantity++;
+
+        } else {
+
+            cart.push({
+
+                restaurant: restaurant,
+                name: name,
+                price: price,
+                quantity: 1
+
+            });
+
+        }
+
+
+        updateCart();
+
+        alert("✅ " + name + " a été ajouté au panier.");
+
+    }
+
+
+    /* =====================================================
+       METTRE À JOUR LE PANIER
+    ===================================================== */
+
+    function updateCart() {
+
+        const cartButton =
+            document.getElementById("cartButton");
+
+        const totalQuantity =
+            cart.reduce(
+                function(total, item) {
+                    return total + item.quantity;
+                },
+                0
+            );
+
+
+        cartButton.textContent =
+            "🛒 Panier (" + totalQuantity + ")";
+
+    }
+
+
+    /* =====================================================
+       OUVRIR LE PANIER
+    ===================================================== */
+
+    function openCart() {
+
+        document.getElementById("menuSection").style.display =
+            "none";
+
+        document.getElementById("orderSection").style.display =
+            "none";
+
+        document.getElementById("cartSection").style.display =
+            "block";
+
+
+        renderCart();
+
+
+        document.getElementById("cartSection")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+
+
+    /* =====================================================
+       AFFICHER LE PANIER
+    ===================================================== */
+
+    function renderCart() {
+
+        const cartList =
+            document.getElementById("cartList");
+
+        const cartTotal =
+            document.getElementById("cartTotal");
+
+
+        if (cart.length === 0) {
+
+            cartList.innerHTML = `
+                <div class="message">
+                    🛒 Votre panier est vide.
+                </div>
+            `;
+
+            cartTotal.textContent = "";
+
+            return;
+
+        }
+
+
+        cartList.innerHTML = "";
+
+
+        let total = 0;
+
+
+        cart.forEach(function(item, index) {
+
+            const itemTotal =
+                item.price * item.quantity;
+
+            total += itemTotal;
+
+
+            const element =
+                document.createElement("div");
+
+            element.className = "cart-item";
+
+            element.innerHTML = `
+
+                <div>
+                    <strong>${item.name}</strong>
+                    <br>
+                    <small>${item.restaurant}</small>
+                    <br>
+                    ${itemTotal} DH
+                </div>
+
+                <div class="quantity-buttons">
+
+                    <button onclick="changeQuantity(${index}, -1)">
+                        −
+                    </button>
+
+                    <strong>${item.quantity}</strong>
+
+                    <button onclick="changeQuantity(${index}, 1)">
+                        +
+                    </button>
+
+                    <button
+                        class="remove-button"
+                        onclick="removeFromCart(${index})"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
+            `;
+
+            cartList.appendChild(element);
+
+        });
+
+
+        cartTotal.textContent =
+            "Total : " + total + " DH";
+
+    }
+
+
+    /* =====================================================
+       CHANGER QUANTITÉ
+    ===================================================== */
+
+    function changeQuantity(index, change) {
+
+        cart[index].quantity += change;
+
+
+        if (cart[index].quantity <= 0) {
+
+            cart.splice(index, 1);
+
+        }
+
+
+        updateCart();
+
+        renderCart();
+
+    }
+
+
+    /* =====================================================
+       SUPPRIMER DU PANIER
+    ===================================================== */
+
+    function removeFromCart(index) {
+
+        cart.splice(index, 1);
+
+        updateCart();
+
+        renderCart();
+
+    }
+
+
+    /* =====================================================
+       FORMULAIRE DE COMMANDE
+    ===================================================== */
+
+    function showOrderForm() {
+
+        if (cart.length === 0) {
+
+            alert("🛒 Votre panier est vide.");
+
+            return;
+
+        }
+
+
+        document.getElementById("cartSection").style.display =
+            "none";
+
+        document.getElementById("orderSection").style.display =
+            "block";
+
+
+        document.getElementById("orderSection")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+
+
+    function closeOrderForm() {
+
+        document.getElementById("orderSection").style.display =
+            "none";
+
+        document.getElementById("cartSection").style.display =
+            "block";
+
+    }
+
+
+    /* =====================================================
+       CONFIRMER COMMANDE
+    ===================================================== */
+
+    function confirmOrder() {
+
+        const name =
+            document.getElementById("customerName").value.trim();
+
+        const phone =
+            document.getElementById("customerPhone").value.trim();
+
+        const address =
+            document.getElementById("customerAddress").value.trim();
+
+
+        if (
+            name === "" ||
+            phone === "" ||
+            address === ""
+        ) {
+
+            alert(
+                "⚠️ Veuillez remplir votre nom, votre numéro et votre adresse."
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById("orderMessage").innerHTML = `
+
+            <div class="success">
+
+                ✅ Votre commande a été préparée !
+
+                <br><br>
+
+                Merci ${name} ❤️
+
+                <br><br>
+
+                📞 ${phone}
+
+                <br>
+
+                📍 ${address}
+
+                <br><br>
+
+                <strong>
+                    Cette version est encore une démonstration.
+                    Le système réel de commande sera connecté plus tard.
+                </strong>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       RETOUR AUX RESTAURANTS
+    ===================================================== */
+
+    function backToRestaurants() {
+
+        document.getElementById("menuSection").style.display =
+            "none";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    function closeCart() {
+
+        document.getElementById("cartSection").style.display =
+            "none";
+
+    }
+
+
+    /* =====================================================
+       RECHERCHE
+    ===================================================== */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+            const search =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
+
+
+            if (search === "") {
+
+                restaurantsList.innerHTML = `
+                    <div class="message">
+                        Choisissez une catégorie pour voir les restaurants disponibles.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            const results = [];
+
+
+            Object.keys(restaurants)
+                .forEach(function(category) {
+
+                    restaurants[category]
+                        .forEach(function(restaurant) {
+
+                            const restaurantMatch =
+                                restaurant.name
+                                    .toLowerCase()
+                                    .includes(search);
+
+                            const categoryMatch =
+                                category
+                                    .toLowerCase()
+                                    .includes(search);
+
+
+                            if (
+                                restaurantMatch ||
+                                categoryMatch
+                            ) {
+
+                                results.push({
+                                    restaurant: restaurant,
+                                    category: category
+                                });
+
+                            }
+
+                        });
+
+                });
+
+
+            restaurantsList.innerHTML = "";
+
+
+            if (results.length === 0) {
+
+                restaurantsList.innerHTML = `
+                    <div class="message">
+                        ❌ Aucun restaurant trouvé.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            results.forEach(function(result) {
+
+                const restaurant =
+                    result.restaurant;
+
+
+                const element =
+                    document.createElement("div");
+
+                element.className = "restaurant";
+
+                element.innerHTML = `
+
+                    <h3>🍽️ ${restaurant.name}</h3>
+
+                    <p>
+                        ${result.category}
+                    </p>
+
+                    <p>
+                        ${restaurant.rating}
+                    </p>
+
+                    <p>
+                        🛵 Livraison : ${restaurant.time}
+                    </p>
+
+                    <button onclick="openMenu('${restaurant.name}')">
+                        📋 Voir le menu
+                    </button>
+
+                `;
+
+                restaurantsList.appendChild(element);
+
+            });
+
+        }
+    );
+
+
+    /* =====================================================
+       GÉOLOCALISATION
+    ===================================================== */
+
+    const locationButton =
+        document.getElementById("locationButton");
+
+    const locationStatus =
+        document.getElementById("locationStatus");
+
+
+    locationButton.addEventListener(
+        "click",
+        function() {
+
+            if (!navigator.geolocation) {
+
+                locationStatus.textContent =
+                    "❌ La localisation n'est pas disponible.";
+
+                return;
+
+            }
+
+
+            locationStatus.textContent =
+                "📍 Recherche de votre position...";
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    const latitude =
+                        position.coords.latitude;
+
+                    const longitude =
+                        position.coords.longitude;
+
+
+                    console.log(
+                        "Position :",
+                        latitude,
+                        longitude
+                    );
+
+
+                    locationStatus.textContent =
+                        "✅ Position trouvée !";
+
+                },
+
+                function() {
+
+                    locationStatus.textContent =
+                        "❌ Autorisation de localisation refusée.";
+
+                }
+
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       INITIALISATION
+    ===================================================== */
+
+    updateCart();
 
 </script>
 
