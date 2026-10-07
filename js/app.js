@@ -1,96 +1,110 @@
 // ================================
-// ZESTO AFRICA - APPLICATION
+// ZESTO AFRICA
+// Affichage des restaurants
 // ================================
 
-function getZestoRestaurants() {
-    return ZESTO_DATA.restaurants || [];
-}
+document.addEventListener("DOMContentLoaded", function () {
 
-function getZestoRestaurantById(id) {
-    return getZestoRestaurants().find(
-        restaurant => restaurant.id === id
-    );
-}
-
-function getZestoSearchResults(query) {
-    return searchZestoRestaurants(
-        getZestoRestaurants(),
-        query
-    );
-}
-
-function renderZestoRestaurants(restaurants = getZestoRestaurants()) {
     const container = document.getElementById("restaurants");
 
     if (!container) {
-        console.warn("Conteneur des restaurants introuvable.");
+        console.error("ZESTO : le conteneur restaurants est introuvable.");
         return;
     }
 
+    if (typeof ZESTO_DATA === "undefined") {
+        container.innerHTML = `
+            <div class="empty">
+                ❌ Impossible de charger les restaurants.
+            </div>
+        `;
+
+        console.error("ZESTO_DATA n'est pas chargé.");
+        return;
+    }
+
+    const restaurants = ZESTO_DATA.restaurants || [];
+
     if (restaurants.length === 0) {
         container.innerHTML = `
-            <div class="empty-state">
-                <h3>😔 Aucun restaurant disponible</h3>
-                <p>Essayez une autre recherche.</p>
+            <div class="empty">
+                😔 Aucun restaurant disponible.
             </div>
         `;
         return;
     }
 
-    container.innerHTML = restaurants.map(restaurant => `
-        <article class="restaurant-card">
-            <div class="restaurant-image">
-                ${
-                    restaurant.image
-                    ? `<img src="${restaurant.image}" alt="${restaurant.name}">`
-                    : `<div class="restaurant-placeholder">🍽️</div>`
-                }
-            </div>
+    container.innerHTML = restaurants.map(function (restaurant) {
 
-            <div class="restaurant-content">
-                <h3>${restaurant.name}</h3>
+        return `
+            <article class="restaurant-card">
 
-                <p>${restaurant.description}</p>
-
-                <div class="restaurant-info">
-                    ⭐ ${restaurant.rating}
-                    · ⏱️ ${restaurant.deliveryTime} min
-                    · 🛵 ${restaurant.deliveryFee} DH
+                <div class="restaurant-image">
+                    ${
+                        restaurant.image
+                        ? `<img
+                            src="${restaurant.image}"
+                            alt="${restaurant.name}"
+                            style="width:100%;height:100%;object-fit:cover;"
+                        >`
+                        : `<div style="
+                            width:100%;
+                            height:100%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:60px;
+                            background:#f3f3f3;
+                        ">🍽️</div>`
+                    }
                 </div>
 
-                <button
-                    type="button"
-                    onclick="openZestoRestaurant('${restaurant.id}')"
-                >
-                    Voir le menu
-                </button>
-            </div>
-        </article>
-    `).join("");
-}
+                <div class="restaurant-content">
 
-function openZestoRestaurant(id) {
-    const restaurant = getZestoRestaurantById(id);
+                    <div class="restaurant-title">
+                        <h3>${restaurant.name}</h3>
 
-    if (!restaurant) {
-        return;
-    }
+                        <span class="restaurant-rating">
+                            ⭐ ${restaurant.rating}
+                        </span>
+                    </div>
 
-    console.log("Restaurant sélectionné :", restaurant);
+                    <p>
+                        ${restaurant.description}
+                    </p>
 
-    if (typeof window.openRestaurantMenu === "function") {
-        window.openRestaurantMenu(restaurant);
-        return;
-    }
+                    <div class="restaurant-info">
+                        ⏱️ ${restaurant.deliveryTime} min
+                        · 🛵 ${restaurant.deliveryFee} DH
+                    </div>
 
-    alert(
-        `${restaurant.name}\n\n` +
-        `${restaurant.description}\n` +
-        `⭐ ${restaurant.rating}\n` +
-        `⏱️ ${restaurant.deliveryTime} min`
+                    <div class="restaurant-meta">
+                        ${
+                            (restaurant.categories || [])
+                            .map(category =>
+                                `<span class="meta-badge">${category}</span>`
+                            )
+                            .join("")
+                        }
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="alert('Menu de ${restaurant.name}')"
+                    >
+                        Voir le menu
+                    </button>
+
+                </div>
+
+            </article>
+        `;
+
+    }).join("");
+
+    console.log(
+        "Zesto chargé correctement :",
+        restaurants.length,
+        "restaurant(s)"
     );
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    renderZestoRestaurants();
 });
