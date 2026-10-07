@@ -63,6 +63,29 @@
 
         <p>Les meilleurs restaurants arrivent bientôt sur Zesto.</p>
     </main>
+<script>
+    const locationButton = document.getElementById("locationButton");
+    const locationStatus = document.getElementById("locationStatus");
 
+    locationButton.addEventListener("click", () => {
+        if (!navigator.geolocation) {
+            locationStatus.textContent = "La localisation n'est pas disponible sur cet appareil.";
+            return;
+        }
+
+        locationStatus.textContent = "📍 Recherche de votre position...";
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                locationStatus.textContent =
+                    `✅ Position trouvée : ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+            },
+            () => {
+                locationStatus.textContent =
+                    "❌ Autorisation de localisation refusée." });
+</script>
 </body>
 </html>
