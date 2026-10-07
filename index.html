@@ -69,7 +69,7 @@
 
     locationButton.addEventListener("click", () => {
         if (!navigator.geolocation) {
-            locationStatus.textContent = "La localisation n'est pas disponible sur cet appareil.";
+            locationStatus.textContent = "La localisation n'est pas disponible.";
             return;
         }
 
@@ -77,28 +77,25 @@
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-
-                locationStatus.textContent =
-                    `✅ Position trouvée : ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+                locationStatus.textContent = "✅ Position trouvée !";
             },
             () => {
-                locationStatus.textContent =
-                    "❌ Autorisation de localisation refusée." });
+                locationStatus.textContent = "❌ Autorisation refusée.";
+            }
+        );
+    });
 
-              </script>                   
-            <script>
     const categoryButtons = document.querySelectorAll(".categories button");
 
     categoryButtons.forEach(button => {
         button.addEventListener("click", () => {
-            const category = button.textContent;
-
-            alert("Vous avez choisi : " + category);
+            alert("Vous avez choisi : " + button.textContent);
         });
     });
 </script>
+
+</body>
+</html>
 
     
 </body>
