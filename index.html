@@ -88,7 +88,69 @@
         );
     });
 
-    const categoryButtons = document.querySelectorAll(".categories button");
+    <script>
+    const restaurants = {
+        "🍣 Sushi": [
+            "Sushi House",
+            "Tokyo Sushi",
+            "Sushi Time"
+        ],
+
+        "🍔 Burgers": [
+            "Burger House",
+            "Big Burger",
+            "Burger Time"
+        ],
+
+        "🍕 Pizza": [
+            "Pizza House",
+            "Pizza Time",
+            "La Bella Pizza"
+        ],
+
+        "🥙 Shawarma": [
+            "Shawarma House",
+            "Shawarma Time",
+            "Le Petit Shawarma"
+        ],
+
+        "🍗 Poulet": [
+            "Chicken House",
+            "Chicken Time",
+            "Poulet Express"
+        ]
+    };
+
+    const categoryButtons =
+        document.querySelectorAll(".categories button");
+
+    const restaurantsList =
+        document.getElementById("restaurantsList");
+
+    categoryButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const category = button.textContent;
+
+            const selectedRestaurants =
+                restaurants[category];
+
+            if (!selectedRestaurants) {
+                restaurantsList.innerHTML =
+                    "<p>Aucun restaurant disponible pour cette catégorie pour le moment.</p>";
+                return;
+            }
+
+            restaurantsList.innerHTML =
+                "<h3>" + category + "</h3>" +
+                selectedRestaurants
+                    .map(restaurant => "<p>🍽️ " + restaurant + "</p>")
+                    .join("");
+        });
+
+    });
+</script>
 
     categoryButtons.forEach(button => {
         button.addEventListener("click", () => {
